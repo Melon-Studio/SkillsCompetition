@@ -93,10 +93,10 @@ export default {
     document.querySelector('meta[name="description"]').setAttribute('content', this.AppDiscription)
     this.isLogin()
 
-    //用户未登录时，隐藏列表 
-      if (this.$cookies.get('username') === null) {
-         this.showList = false
-      }
+    //用户未登录时，隐藏列表
+    if (this.$cookies.get('username') === null) {
+      this.showList = false
+    }
   },
   methods: {
     // Cookie 弹窗逻辑
@@ -119,7 +119,7 @@ export default {
         this.LoginStatus = this.$cookies.get('user')
         return true
       }
-    },
+    }
   }
 }
 </script>
