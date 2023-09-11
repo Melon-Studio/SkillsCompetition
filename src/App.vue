@@ -32,7 +32,7 @@
                   <a v-bind="props" @click="navigateTo('/login')"> {{ LoginStatus }} </a>
                 </template>
 
-                <v-list class="v-theme--dark">
+                <v-list v-if="showList" class="v-theme--dark">
                   <v-list-item
                     v-for="(item, index) in items"
                     :key="index"
@@ -69,7 +69,6 @@
 import IconLogo from './components/icons/IconLogo.vue'
 import { RouterLink, RouterView } from 'vue-router'
 import Global from './AppGlobal.vue'
-import Ajax from './api/request.js';
 
 export default {
   data() {
@@ -81,7 +80,8 @@ export default {
       items: [
         { title: '个人中心', url: '/space/my' },
         { title: '退出登录', url: '/logout' }
-      ]
+      ],
+      showList: true
     }
   },
   components: {
@@ -93,16 +93,10 @@ export default {
     document.querySelector('meta[name="description"]').setAttribute('content', this.AppDiscription)
     this.isLogin()
 
-    const self = this;
-    //原生js Ajax测试
-    Ajax.get('http://localhost:5205/api/GetUserById/1', function (resp) {
-      const jsObject = JSON.parse(resp)
-      console.log(jsObject.data)
-      self.LoginStatus = jsObject.data.username
-      console.log(self.LoginStatus)
-    })
-
-
+    //用户未登录时，隐藏列表 
+      if (this.$cookies.get('username') === null) {
+         this.showList = false
+      }
   },
   methods: {
     // Cookie 弹窗逻辑
@@ -125,7 +119,7 @@ export default {
         this.LoginStatus = this.$cookies.get('user')
         return true
       }
-    }
+    },
   }
 }
 </script>
