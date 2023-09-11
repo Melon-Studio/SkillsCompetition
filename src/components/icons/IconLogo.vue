@@ -1,0 +1,71 @@
+<template>
+  <!-- Generator: Adobe Illustrator 26.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+  <svg
+    version="1.1"
+    id="Layer"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    x="0px"
+    y="0px"
+    viewBox="0 0 64 59.9"
+    style="enable-background: new 0 0 64 59.9"
+    xml:space="preserve"
+  >
+    <path
+      class="st0"
+      d="M32,42.8c7.1,0,12.8-5.7,12.8-12.8c0-7.1-5.7-12.8-12.8-12.8c-7.1,0-12.8,5.8-12.8,12.8
+	C19.2,37,24.9,42.8,32,42.8z"
+    />
+    <radialGradient
+      id="SVGID_1_"
+      cx="-1034.4081"
+      cy="719.5352"
+      r="2.4943"
+      gradientTransform="matrix(-11 3.5 1.6024 5.0362 -12472.0596 17.8774)"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop offset="0" style="stop-color: #ffffff; stop-opacity: 0.7" />
+      <stop offset="1" style="stop-color: #ffffff" />
+    </radialGradient>
+    <path
+      class="st1"
+      d="M32,7.2C19.4,7.2,9.3,17.4,9.3,29.9c0,12.6,10.2,22.7,22.7,22.7c12.6,0,22.7-10.2,22.7-22.7
+	c0-3.4-0.7-6.6-2.1-9.5l6.5-3c1.7,3.8,2.7,8,2.7,12.5c0,16.5-13.4,29.9-29.9,29.9c-16.5,0-29.9-13.4-29.9-29.9C2.1,13.4,15.5,0,32,0
+	c8.6,0,16.4,3.7,21.9,9.5l-5.3,4.9C44.5,10,38.6,7.2,32,7.2z"
+    />
+    <path
+      class="st2"
+      d="M53.2,27.4c4.8,0,8.7-3.9,8.7-8.7S58,10,53.2,10s-8.7,3.9-8.7,8.7S48.4,27.4,53.2,27.4z"
+    />
+    <path
+      class="st3"
+      d="M53.4,23.5c4.7,0,8.6-3.8,8.6-8.6s-3.8-8.6-8.6-8.6c-4.7,0-8.6,3.8-8.6,8.6S48.7,23.5,53.4,23.5z"
+    />
+    <path
+      class="st0"
+      d="M51.2,19.2c3.5,0,6.4-2.9,6.4-6.4s-2.9-6.4-6.4-6.4c-3.5,0-6.4,2.9-6.4,6.4S47.7,19.2,51.2,19.2z"
+    />
+  </svg>
+</template>
+
+<style>
+.st0 {
+  fill: #ffffff;
+}
+.st1 {
+  fill-rule: evenodd;
+  clip-rule: evenodd;
+  fill: url(#SVGID_1_);
+}
+.st2 {
+  opacity: 0.4;
+  fill: #03060b;
+  enable-background: new;
+}
+.st3 {
+  fill: #03060b;
+}
+#Layer {
+    width: 32px;
+}
+</style>
