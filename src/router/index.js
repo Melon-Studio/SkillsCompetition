@@ -61,17 +61,37 @@ const router = createRouter({
         pageName: '作品'
       },
       component: () => import('../views/WorkView.vue'),
-      children:[{
-        path: ':page',
-        component: () => import('../components/work/WorkLoader.vue'),
-      }]
+    },
+    {
+      path: '/:catchAll(.*)',
+      name: '404',
+      meta: {
+        pageName: '404 页面丢失了'
+      },
+      component: () => import('../views/404View.vue')
+    },
+    {
+      path: '/upload',
+      name: 'upload',
+      meta: {
+        pageName: '上传'
+      },
+      component: () => import('../views/UploadView.vue')
+    },
+    {
+      path: '/logout',
+      name: 'logout',
+      meta: {
+        pageName: '退出登录'
+      },
+      component: () => import('../views/LogoutView.vue')
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
-  document.title = to.meta.pageName + ' - ' + AppGlobal.WebAppTitle;
-  next();
+  document.title = to.meta.pageName + ' - ' + AppGlobal.WebAppTitle
+  next()
 })
 
 export default router

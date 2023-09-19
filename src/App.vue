@@ -1,44 +1,34 @@
 <template>
-  <div
-    class="v-application v-layout v-layout--full-height v-locale--is-ltr"
-    id="inspire"
-    style="z-index: 1000"
-  >
+  <div class="v-application v-layout v-layout--full-height v-locale--is-ltr" id="inspire" style="z-index: 1000">
     <div class="v-application__wrap v-theme--dark">
-      <header
-        class="v-toolbar v-toolbar--flat v-toolbar--density-default rounded-sm v-locale--is-ltr v-app-bar"
-        style="
+      <header class="v-toolbar v-toolbar--flat v-toolbar--density-default rounded-sm v-locale--is-ltr v-app-bar" style="
           top: 0px;
           z-index: 1006;
           transform: translateY(0%);
           position: fixed;
           left: 0px;
           width: calc((100% - 0px) - 0px);
-        "
-      >
+        ">
         <div class="v-toolbar__content" style="height: 64px">
           <div class="v-container v-locale--is-ltr d-flex align-center py-0">
             <div class="v-toolbar-title pl-0 v-app-bar-title leftTitle">
               <div class="logoA">
-                <RouterLink to="/"> <IconLogo class="logo" /> {{ AppTitle }} </RouterLink>
+                <RouterLink to="/">
+                  <IconLogo class="logo" style="margin: 0; margin-right: 10px;" /> {{ AppTitle }}
+                </RouterLink>
               </div>
               <RouterLink to="/">首页</RouterLink>
               <RouterLink to="/about">关于</RouterLink>
             </div>
             <div class="flex-grow-1"></div>
-            <div>
+            <div ref="right">
               <v-menu open-on-hover>
                 <template v-slot:activator="{ props }">
-                  <a v-bind="props" @click="navigateTo('/login')"> {{ LoginStatus }} </a>
+                  <a v-bind="props" @click="navigateTo('/login')"> {{ user.getUsername }} </a>
                 </template>
 
-                <v-list v-if="showList" class="v-theme--dark">
-                  <v-list-item
-                    v-for="(item, index) in items"
-                    :key="index"
-                    :value="index"
-                    @click="navigateTo(item.url)"
-                  >
+                <v-list v-if="user.getIsLogin" class="v-theme--dark">
+                  <v-list-item v-for="(item, index) in items" :key="index" :value="index" @click="navigateTo(item.url)">
                     <v-list-item-title>{{ item.title }}</v-list-item-title>
                   </v-list-item>
                 </v-list>
@@ -52,16 +42,26 @@
   </div>
   <div class="text-center" v-if="isCookiesFalse()">
     <v-dialog v-model="dialogVisible" persistent width="600">
-      <v-card
-        class="v-theme--dark"
-        title="我们的网站正在使用 Cookie"
-        text="为了提供更好的体验，我们使用了 Cookie 技术，如：保持你的登录状态等，用于在你的设备上储存这些信息。这条弹窗是为你而设的，以便你了解我们使用 Cookie 的目的。"
-      >
+      <v-card class="v-theme--dark" title="我们的网站正在使用 Cookie"
+        text="为了提供更好的体验，我们使用了 Cookie 技术，如：保持你的登录状态等，用于在你的设备上储存这些信息。这条弹窗是为你而设的，以便你了解我们使用 Cookie 的目的。">
         <v-card-actions>
           <v-btn variant="outlined" block @click="setCookieTrue()"> 我知道了 </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
+  </div>
+  <div>
+    <v-snackbar v-model="snackbar" vertical>
+      <div class="text-subtitle-1 pb-2">通知</div>
+
+      <p>{{ snackBarContent }}</p>
+
+      <template v-slot:actions>
+        <v-btn color="indigo" variant="text" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -69,6 +69,7 @@
 import IconLogo from './components/icons/IconLogo.vue'
 import { RouterLink, RouterView } from 'vue-router'
 import Global from './AppGlobal.vue'
+import { useUserStore } from '@/stores/UserStore'
 
 export default {
   data() {
@@ -76,12 +77,12 @@ export default {
       AppTitle: Global.WebAppTitle,
       AppDiscription: Global.WebAppDescription,
       dialogVisible: false,
-      LoginStatus: '登录',
       items: [
         { title: '个人中心', url: '/space/my' },
         { title: '退出登录', url: '/logout' }
       ],
-      showList: true
+      snackbar: false,
+      snackBarContent: ''
     }
   },
   components: {
@@ -91,12 +92,8 @@ export default {
   },
   created() {
     document.querySelector('meta[name="description"]').setAttribute('content', this.AppDiscription)
-    this.isLogin()
 
-    //用户未登录时，隐藏列表
-    if (this.$cookies.get('username') === null) {
-      this.showList = false
-    }
+    // TEST
   },
   methods: {
     // Cookie 弹窗逻辑
@@ -107,18 +104,20 @@ export default {
       }
     },
     setCookieTrue() {
-      this.$cookies.set('isCookie', true)
+      this.$cookies.set('isCookie', true, 60 * 60 * 24 * 10)
       this.dialogVisible = false
     },
     // 登录导航逻辑
     navigateTo(url) {
       this.$router.push(url)
     },
-    isLogin() {
-      if (this.$cookies.get('user') && this.$cookies.get('token')) {
-        this.LoginStatus = this.$cookies.get('user')
-        return true
-      }
+  },
+  setup() {
+    const user = useUserStore()
+    user.setLoginMode()
+    
+    return {
+      user
     }
   }
 }
