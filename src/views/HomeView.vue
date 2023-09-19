@@ -7,7 +7,6 @@
       --v-layout-top: 112px;
       --v-layout-bottom: 0px;
     "
-    :style="mainStyles"
   >
     <div class="v-container v-locale--is-ltr v-theme--dark">
       <div class="v-row">

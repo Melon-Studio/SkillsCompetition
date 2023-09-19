@@ -12,5 +12,17 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
-  }
+  },
+  optimizeDeps: {
+    // 禁用所有警告
+    warnings: false,
+  },
+  build: {
+    // 禁用所有警告
+    rollupOptions: {
+      output: {
+        manualChunks: () => 'vite-disable-warnings',
+      },
+    },
+  },
 })
