@@ -11,6 +11,7 @@
     <div class="v-container v-locale--is-ltr v-theme--dark">
       <div class="v-row">
         <div class="v-col v-col-4" ref="home_data" id="home_data">
+          
           <div
             class="v-card v-card--density-default v-card--variant-elevated v-theme--dark"
             style="height: 200px"

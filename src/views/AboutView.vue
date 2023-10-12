@@ -32,7 +32,7 @@
           </p>
           <p>
             欢迎各位同学下载源代码研究，如遇到任何问题，欢迎在 GitHub 仓库提交 Issue，或通过邮箱联系我。
-            <a href="mailto:xiaofan6@foxmail.com" target="_blank">xiaofan6@foxmail.com</a>
+            xiaofan6@foxmail.com
           </p>
           <p>
             本程序前端使用到的技术栈有：

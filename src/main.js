@@ -33,6 +33,13 @@ const vuetify = createVuetify({
   },
 })
 
+// 代码高亮
+import hljs from 'highlight.js';
+import 'highlight.js/styles/atom-one-dark.css'
+
+hljs.configure({
+  ignoreUnescapedHTML: true
+})
 
 const app = createApp(App)
 app.config.devtools = true
@@ -41,6 +48,12 @@ app.use(vuetify)
 app.use(router)
 app.use(VueCookies)
 app.use(MakeitCaptcha)
+app.directive('highlight', function (el) {
+  let blocks = el.querySelectorAll('pre code')
+  blocks.forEach((block) => {
+    hljs.highlightBlock(block)
+  });
+})
 app.mount('#app')
 
   

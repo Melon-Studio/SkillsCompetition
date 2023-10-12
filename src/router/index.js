@@ -11,7 +11,8 @@ const router = createRouter({
       name: 'home',
       component: HomeView,
       meta: {
-        pageName: '首页'
+        pageName: '首页',
+        isShow: true
       }
     },
     {
@@ -19,7 +20,8 @@ const router = createRouter({
       name: 'about',
       component: AboutView,
       meta: {
-        pageName: '关于'
+        pageName: '关于',
+        isShow: true
       }
     },
     {
@@ -27,7 +29,8 @@ const router = createRouter({
       name: 'login',
       component: () => import('../views/LoginView.vue'),
       meta: {
-        pageName: '登录'
+        pageName: '登录',
+        isShow: true
       }
     },
     {
@@ -35,14 +38,16 @@ const router = createRouter({
       name: 'space',
       component: () => import('../views/SpaceView.vue'),
       meta: {
-        pageName: '个人中心'
+        pageName: '个人中心',
+        isShow: true
       },
       children: [{
         path: 'my',
         name: 'my',
         component: () => import('../components/space/SpaceMy.vue'),
         meta: {
-          pageName: '个人资料'
+          pageName: '个人资料',
+          isShow: true
         }
       },
       {
@@ -50,7 +55,8 @@ const router = createRouter({
         name: 'account',
         component: () => import('../components/space/SpaceAccount.vue'),
         meta: {
-          pageName: '账号安全'
+          pageName: '账号安全',
+          isShow: true
         }
       }]
     },
@@ -58,7 +64,8 @@ const router = createRouter({
       path: '/work',
       name: 'work',
       meta: {
-        pageName: '作品'
+        pageName: '作品',
+        isShow: true
       },
       component: () => import('../views/WorkView.vue'),
     },
@@ -66,7 +73,8 @@ const router = createRouter({
       path: '/:catchAll(.*)',
       name: '404',
       meta: {
-        pageName: '404 页面丢失了'
+        pageName: '404 页面丢失了',
+        isShow: true
       },
       component: () => import('../views/404View.vue')
     },
@@ -74,7 +82,8 @@ const router = createRouter({
       path: '/upload',
       name: 'upload',
       meta: {
-        pageName: '上传'
+        pageName: '上传',
+        isShow: true
       },
       component: () => import('../views/UploadView.vue')
     },
@@ -82,9 +91,57 @@ const router = createRouter({
       path: '/logout',
       name: 'logout',
       meta: {
-        pageName: '退出登录'
+        pageName: '退出登录',
+        isShow: false
       },
       component: () => import('../views/LogoutView.vue')
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      meta: {
+        pageName: '后台管理',
+        isShow: false
+      },
+      component: () => import('../views/admin/AdminView.vue'),
+      children:[
+        {
+          path: 'dashboard',
+          name: 'dashboard',
+          component: () => import('../components/admin/AdminDashboard.vue'),
+          meta: {
+            pageName: '仪表盘',
+            isShow: false
+          },
+        },
+        {
+          path: 'users',
+          name: 'users',
+          component: () => import('../components/admin/AdminUsers.vue'),
+          meta: {
+            pageName: '用户管理',
+            isShow: false
+          }
+        },
+        {
+          path: 'works',
+          name: 'works',
+          component: () => import('../components/admin/AdminWork.vue'),
+          meta: {
+            pageName: '作品管理',
+            isShow: false
+          }
+        },
+        {
+          path: 'settings',
+          name: 'settings',
+          component: () => import('../components/admin/AdminSettings.vue'),
+          meta: {
+            pageName: '系统设置',
+            isShow: false
+          }
+        }
+      ]
     }
   ]
 })

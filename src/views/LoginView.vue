@@ -2,21 +2,21 @@
   <v-layout class="rounded rounded-md">
     <v-main class="d-flex align-center justify-center" style="min-height: 300px">
       <v-form @submit.prevent="submit">
-        <v-card title="登录" subtitle=" " v-bind:text="tips" variant="tonal" style="width: 413px; padding: 15px">
+        <v-card title="登录" subtitle=" " text="" variant="tonal" style="width: 413px; padding: 15px">
           <v-card-actions class="justify-center" style="flex-direction: column">
-            <v-text-field clearable label="学号" variant="solo-filled" type="number" style="width: 380px"
+            <v-text-field clearable label="学号" name="sid" variant="solo-filled" type="number" style="width: 380px"
               v-model="sid.value.value" :error-messages="sid.errorMessage.value" :counter="10"></v-text-field>
 
-            <v-text-field clearable label="密码" type="password" variant="solo-filled" style="width: 380px"
+            <v-text-field clearable label="密码" name="password" type="password" variant="solo-filled" style="width: 380px"
               v-model="password.value.value" :error-messages="password.errorMessage.value" :counter="18"></v-text-field>
 
             <div class="mi-captchas">
               <mi-captcha themeColor="#41B883" image="./assets/captcha.jpg" logo="./assets/vclogo.svg"
-                borderColor="#00000000" boxShadow=false boxShadowBlur="0" bgColor="#444444" width="380" height="40"
-                radius="4" modalBoxShadowColor="#000000" modalBoxShadowBlur="0" @success="handleSuccess" ref="captcha" />
+                borderColor="#00000000" :boxShadow=false :boxShadowBlur="0" bgColor="#444444" :width="380" :height="40"
+                :radius="4" modalBoxShadowColor="#000000" :modalBoxShadowBlur="0" @success="handleSuccess" ref="captcha" />
             </div>
 
-            <div style="display: flex; flex-direction: row">
+            <div style="display: flex; flex-direction: row;height: 40px; margin-bottom: 40px;">
 
               <v-checkbox label="我同意" v-model="check.value.value" :error-messages="check.errorMessage.value" value="1"
                 type="checkbox"></v-checkbox>
@@ -59,8 +59,8 @@
                 </v-dialog>
               </div>
             </div>
-            <v-btn :loading="loading" variant="tonal" style="width: 200px" @click="submit"><i
-                class="bi bi-door-closed-fill"></i>登录</v-btn>
+            <v-btn :loading="loadding" variant="tonal" style="width: 200px" @click="submit"><i
+                class="bi bi-door-closed-fill"></i>{{ loginText }}</v-btn>
           </v-card-actions>
         </v-card>
       </v-form>
@@ -76,7 +76,10 @@ import { ref } from 'vue';
 import cookies from 'vue-cookies'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/UserStore'
+import { useMsgStore } from '@/stores/MsgStore'
 const router = useRouter()
+
+const msgControl = useMsgStore()
 
 // 数据校验
 const { handleSubmit, handleReset } = useForm({
@@ -92,7 +95,6 @@ const { handleSubmit, handleReset } = useForm({
     },
     check(value) {
       if (value === '1') return true
-
       return '必须同意'
     },
   },
@@ -101,14 +103,14 @@ const sid = useField('sid')
 const password = useField('password')
 const check = useField('check')
 const dialog = ref(false)
-const tips = ref('')
 const captcha = ref(null)
-const loading = ref(false)
+const loadding = ref(false)
+const loginText = ref('登录')
 
 const submit = handleSubmit(values => {
   // 人机验证
   if (captchaSuccess.value === false) {
-    tips.value = "请完成人机验证"
+    msgControl.setMsg('提示', '请完成人机验证')
     return
   }
   const postData = {
@@ -122,25 +124,36 @@ const submit = handleSubmit(values => {
   }
   const userStore = useUserStore()
   // 登录
-  axios.post(Global.WebAPI_URL + '/user/login', postData, config).then(res => {
-    
-    if (res.data.code === 200) {
-      const token = res.data.data.token
-      cookies.set('Token', token, 60 * 60 * 24 * 10)
-      userStore.setLoginMode()
-      router.push('/')
+  loadding.value = true
+  axios.post(Global.WebAPI_URL + '/user/login', postData, config)
+    .then(res => {
+      if (res.data.code === 200) {
+        const token = res.data.data.token
+        cookies.set('Token', token, 60 * 60 * 24 * 10)
+        userStore.setLoginMode()
+        loadding.value = false
+        loginText.value = '登录成功'
+        setTimeout(() => {
+          router.push('/')
+        }, 2000)
+      } else if (res.data.code === 400) {
+        console.log(res.data)
+        msgControl.setMsg('提示', '学号或密码错误，请重新输入')
+        handleReset()
+        captcha.value.reset(false)
+        captchaSuccess.value = false
+        loadding.value = false
 
-    } else if (res.data.code === 400) {
-      console.log(res.data)
-      tips.value = "学号或密码错误，请重新输入"
-      handleReset()
-      captcha.value.reset(false)
+      } else {
+        msgControl.setMsg('提示', '未知错误，请重试')
+        captchaSuccess.value = false
+        loadding.value = false
+      }
+    }).catch(() => {
+      msgControl.setMsg('错误', '连接远程服务器失败')
       captchaSuccess.value = false
-
-    } else {
-      tips.value = "未知错误，请重试"
-    }
-  })
+      loadding.value = false
+    })
 })
 
 
@@ -148,7 +161,6 @@ const captchaSuccess = ref(false)
 
 function handleSuccess() {
   captchaSuccess.value = true
-  tips.value = ""
 }
 
 </script>
@@ -189,6 +201,20 @@ function handleSuccess() {
   border-color: transparent rgb(21, 21, 21) transparent transparent !important;
 }
 
+.mi-captcha-modal-slider-track-tip {
+  user-select: none;
+}
+
+.mi-captcha-modal-result .mi-captcha-modal-result-error {
+  user-select: none;
+}
+
+.mi-captcha-message-content {
+  border: #121212 2px solid !important;
+  background: #212121 !important;
+  border-radius: 5px;
+}
+
 /* Chrome */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -200,7 +226,11 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-.v-card-text {
-  color: red;
+.v-checkbox .v-input__control {
+  height: 35px;
+}
+
+.v-input {
+  margin-bottom: 5px;
 }
 </style>

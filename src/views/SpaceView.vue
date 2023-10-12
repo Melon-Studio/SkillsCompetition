@@ -74,7 +74,10 @@
 <script>
 export default {
   data() {
-
+    return {
+    }
+  },
+  created() {
   },
   methods: {
     navigateTo(url) {
