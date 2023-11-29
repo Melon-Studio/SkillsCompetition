@@ -36,7 +36,7 @@
           </p>
           <p>
             本程序前端使用到的技术栈有：
-              Vue.js(Vue3)、Vuetify、Piano、Axios、Vue-Router、Eslint、Prettier、vue-cookies
+              Vue.js(Vue3)、Vuetify、Piano、Axios、vue-Router、vue-cookies
           </p>
           <p>
             本程序后端使用到的技术栈有：
@@ -52,7 +52,7 @@
           </p>
           <p>
             开发工具：Visual Studio Code(前端开发)、IntelliJ IDEA(后端开发)、GitHub Desktop(推送本地代码)、
-            GitHub(远代码托管平台)、ApiPost(API测试)、Navicat Premium(数据库管理)、RedisInsiht-V2(Redis管理)
+            GitHub(远程代码托管平台)、Postman(API测试)、Navicat Premium(数据库管理)、RedisInsiht-V2(Redis管理)
           </p>
           <p>
             本程序使用开源协议：

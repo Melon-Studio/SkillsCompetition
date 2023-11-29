@@ -41,27 +41,38 @@ const router = createRouter({
         pageName: '个人中心',
         isShow: true
       },
-      children: [{
-        path: 'my',
-        name: 'my',
-        component: () => import('../components/space/SpaceMy.vue'),
-        meta: {
-          pageName: '个人资料',
-          isShow: true
+      children: [
+        {
+          path: 'workManagement',
+          name: 'workManagement',
+          component: () => import('../components/space/SpaceWork.vue'),
+          meta: {
+            pageName: '作品管理',
+            isShow: true
+          }
+        },
+        {
+          path: 'account',
+          name: 'account',
+          component: () => import('../components/space/SpaceAccount.vue'),
+          meta: {
+            pageName: '账号安全',
+            isShow: true
+          }
         }
-      },
-      {
-        path: 'account',
-        name: 'account',
-        component: () => import('../components/space/SpaceAccount.vue'),
-        meta: {
-          pageName: '账号安全',
-          isShow: true
-        }
-      }]
+      ]
     },
     {
-      path: '/work',
+      path: '/initUser',
+      name: 'initUser',
+      component: () => import('../views/InitUserView.vue'),
+      meta: {
+        pageName: '设置密码',
+        isShow: false
+      }
+    },
+    {
+      path: '/work/:orderId',
       name: 'work',
       meta: {
         pageName: '作品',
@@ -104,7 +115,7 @@ const router = createRouter({
         isShow: false
       },
       component: () => import('../views/admin/AdminView.vue'),
-      children:[
+      children: [
         {
           path: 'dashboard',
           name: 'dashboard',
@@ -130,6 +141,15 @@ const router = createRouter({
           meta: {
             pageName: '作品管理',
             isShow: false
+          }
+        },
+        {
+          path: 'achievements',
+          name: 'achievements',
+          component: () => import('../components/admin/AdminAchievements.vue'),
+          meta: {
+            pageName: '成绩管理',
+            isShow: true
           }
         },
         {

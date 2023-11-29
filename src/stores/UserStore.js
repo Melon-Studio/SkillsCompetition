@@ -8,12 +8,14 @@ export const useUserStore = defineStore('user', {
     state: () => ({
         username: '登录',
         isLogin: false,
-        isAdmin: false
+        isAdmin: false,
+        needInitUser: false
     }),
     getters: {
         getUsername: (state) => state.username,
         getIsLogin: (state) => state.isLogin,
-        getIsAdmin: (state) => state.isAdmin
+        getIsAdmin: (state) => state.isAdmin,
+        getNeedInitUser: (state) => state.needInitUser
     },
     actions: {
         setLoginMode() {
@@ -25,6 +27,7 @@ export const useUserStore = defineStore('user', {
                             this.username = username
                             this.isLogin = true
                             this.isAdmin = res.data.data.usertype === 2 ? true : false
+                            this.needInitUser = res.data.data.password !== null ? true : false
                         } else if (res.data.code === 401) {
                             this.setClearMode()
                         } else {

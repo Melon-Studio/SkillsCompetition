@@ -701,7 +701,7 @@
         <div class="col-md-6 align-self-center">
           <h1>404</h1>
           <h2>UH OH! 页面丢失了</h2>
-          <p>你要访问的页面不存在。<span class="seconds">{{ seconds }}</span>秒后自动返回主页。</p>
+          <p>你要访问的页面不存在。<span class="seconds">{{ seconds }}</span> 秒后自动返回主页。</p>
         </div>
       </div>
     </div>

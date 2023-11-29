@@ -4,9 +4,9 @@
       <v-text-field class="search" label="搜索" variant="outlined" v-model="searchValue" @input="isInput" />
     </div>
     <div style="margin-left: 10px;">
-      <v-btn color="blue" variant="outlined" prepend-icon="bi bi-person-add" @click="addUserDialog = true">
+      <!-- <v-btn color="blue" variant="outlined" prepend-icon="bi bi-person-add" @click="addUserDialog = true">
         添加用户
-      </v-btn>
+      </v-btn> -->
     </div>
   </div>
   <div class="tableBorder">
@@ -60,8 +60,9 @@
           <td>{{ item.classes }}</td>
           <td>{{ userType(item.usertype) }}</td>
           <td>{{ item.status === 1 ? '正常' : '禁用' }}</td>
-          <td><v-btn variant="text" color="yellow" style="margin-right: 5px; font-size: 10px;" icon="bi bi-pen"
-              :width="32" :height="32" @click="editUserDialog = true"></v-btn>
+          <td>
+            <!-- <v-btn variant="text" color="yellow" style="margin-right: 5px; font-size: 10px;" icon="bi bi-pen"
+              :width="32" :height="32" @click="editUserDialog = true"></v-btn> -->
             <v-btn variant="text" color="red" icon="bi bi-trash3" style="font-size: 10px;" :width="32" :height="32"
               @click="deleteUser(item.sid)"></v-btn>
           </td>
@@ -74,7 +75,7 @@
   </div>
 
   <!-- 模态框(添加用户) -->
-  <v-row justify="center">
+  <!-- <v-row justify="center">
     <v-dialog v-model="addUserDialog" persistent width="1024">
       <v-card>
         <v-card-title>
@@ -84,36 +85,36 @@
           <v-container>
             <v-row>
               <v-col cols="12" sm="6" md="6">
-                <v-text-field label="学号*" variant="outlined" name="sid" required></v-text-field>
+                <v-text-field v-model="addSID" label="学号*" variant="outlined" name="sid" required></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="6">
-                <v-text-field label="姓名*" variant="outlined" required></v-text-field>
+                <v-text-field v-model="addName" label="姓名*" variant="outlined" required></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="邮箱*" type="email" name="email" variant="outlined" hidden autocomplete="new-password" required></v-text-field>
+                <v-text-field v-model="addEmail" label="邮箱*" type="email" name="email" variant="outlined" hidden autocomplete="new-password" required></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="密码*" type="password" name="password" variant="outlined" hidden autocomplete="new-password" required></v-text-field>
+                <v-text-field v-model="addPassword" label="密码*" type="password" name="password" variant="outlined" hidden autocomplete="new-password" required></v-text-field>
               </v-col>
               <v-col cols="12" sm="6">
-                <v-select :items="['信息技术学院', '现代农业学院', '智能制造学院', '文化旅游学院', '健康管理学院']" label="学院*" variant="outlined"
+                <v-select v-model="addCollege" :items="['信息技术学院', '现代农业学院', '智能制造学院', '文化旅游学院', '健康管理学院']" label="学院*" variant="outlined"
                   required></v-select>
               </v-col>
               <v-col cols="12" sm="6">
-                <v-select :items="['假数据', '假数据', '假数据', '假数据', '假数据']" label="专业*" variant="outlined" required></v-select>
+                <v-text-field v-model="addProfessional" label="专业*" name="professional" variant="outlined" required></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="6">
-                  <v-text-field label="年级*" variant="outlined" required></v-text-field>
+                  <v-text-field v-model="addGrade" label="年级*" variant="outlined" required></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="6">
-                  <v-text-field label="班级*" variant="outlined" required></v-text-field>
+                  <v-text-field v-model="addClasses" label="班级*" variant="outlined" required></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6">
-                  <v-select :items="['普通用户', '教师', '管理员']" label="用户类型*" variant="outlined"
+                  <v-select v-model="addUsertype" :items="['普通用户', '教师', '管理员']" label="用户类型*" variant="outlined"
                     required></v-select>
                 </v-col>
                 <v-col cols="12" sm="6">
-                    <v-switch label="用户启用状态" inset></v-switch>
+                    <v-switch v-model="addStatus" label="用户启用状态" inset></v-switch>
                   </v-col>
             </v-row>
           </v-container>
@@ -130,10 +131,10 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </v-row>
+  </v-row> -->
 
   <!-- 模态框(添加用户) -->
-  <v-row justify="center">
+  <!-- <v-row justify="center">
     <v-dialog v-model="editUserDialog" persistent width="1024">
       <v-card>
         <v-card-title>
@@ -189,7 +190,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </v-row>
+  </v-row> -->
 
   <!-- 模态框(删除确认) -->
   <v-dialog v-model="isDelete" persistent width="500">
@@ -216,12 +217,24 @@ import Global from '@/AppGlobal.vue'
 import { useMsgStore } from '@/stores/MsgStore.js'
 
 const data = ref([])
-const addUserDialog = ref(false)
-const editUserDialog = ref(false)
+// const addUserDialog = ref(false)
+// const editUserDialog = ref(false)
 const isDelete = ref(false)
 const nowPage = ref(1)
 const pageSize = ref(1)
 const searchValue = ref('')
+
+// 添加用户
+// const addSID = ref()
+// const addName = ref()
+// const addEmail = ref()
+// const addPassword = ref()
+// const addCollege = ref()
+// const addProfessional = ref()
+// const addGrade = ref()
+// const addClasses = ref()
+// const addUsertype = ref()
+// const addStatus = ref(false)
 
 const getUserList = (page, keyword) => {
   axios.get(Global.WebAPI_URL + '/user/pages?token=' + cookies.get('Token') + '&page=' + page + '&keyword=' + keyword)
@@ -229,7 +242,6 @@ const getUserList = (page, keyword) => {
       if (res.data.code === 200) {
         data.value = res.data.data.records
         pageSize.value = res.data.data.pages
-        console.log(res.data.data)
       } else if (res.data.code === 401) {
         const msg = useMsgStore()
         msg.setMsg('错误', '你没有访问权限')
@@ -270,7 +282,6 @@ const deleteSid = () => {
       if (res.data.code === 200) {
         const msg = useMsgStore()
         msg.setMsg('提示', '删除成功')
-        console.log(res.data)
         jumpPage(1)
       } else if (res.data.code === 401) {
         const msg = useMsgStore()

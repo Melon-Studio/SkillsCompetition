@@ -13,6 +13,10 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
+  server: {
+    host: '0.0.0.0',
+    post: 5173
+  },
   optimizeDeps: {
     // 禁用所有警告
     warnings: false,

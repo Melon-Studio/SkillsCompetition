@@ -17,13 +17,10 @@
               <UploadFile @uploadSuccess="uploadSuccess" />
             </div>
             <p class="content">
-              温馨提示：请详细阅读<code @click="dialog = true" style="cursor: pointer;">文件上传规范和作品规范</code>，避免页面无法显示，不必要的扣分等。作品上传成功
-              后，请耐心等待系统基础评审，评审通过后，即可在首页查看。
+              提示：请详细阅读<code @click="dialog = true" style="cursor: pointer;">作品上传规范</code>，避免页面无法显示。不必要的扣分等。作品上传成功
+              后，请耐心等待系统处理作品，处理完成后，即可在首页查看。
             </p>
           </div>
-        </div>
-        <div class="v-col-md-2 v-col-12 aoboutRight">
-          <div class="v-sheet rounded-lg" style="min-height: 268px; display: none;"></div>
         </div>
       </div>
     </div>
@@ -32,14 +29,14 @@
     <v-dialog v-model="dialog" width="800" persistent>
       <v-card>
         <v-card-title>
-          <span class="text-h5">文件上传规范和作品规范</span>
+          <span class="text-h5">作品上传规范</span>
         </v-card-title>
         <v-card-text>
           <p>
-            请上传<code>zip格式</code>的压缩包，压缩包大小为<code>20MB</code>以内，请严格按照<code>作品上传规范</code>上传作品，作品规范是系统评定的基础得分项，如果不按照规范上传作品，将根据规范扣除部分基础得分。
+            请上传<code>zip格式</code>的压缩包，压缩包大小为<code>20MB</code>以内，请严格按照<code>作品上传规范</code>上传作品，如果不按照规范上传作品，将会影响页面的正常显示。
           </p>
           <h3 id="作品上传规范">作品上传规范</h3>
-          <p>本规则将通过系统路径规范检测，如果某些项的检测无法通过，将扣除一些分数，请知悉，请确保上传的作品符合以下基本规则：</p>
+          <p>请确保上传的作品符合以下基本规则：</p>
           <ul>
             <li>路径规范：作品引用的所有资源（ js、css、图片等）都要使用相对路径引用，禁止使用绝对路径引用；</li>
           </ul>
@@ -52,9 +49,6 @@ D:/New Folder/work/css/style.css
 </code>
 </pre>
           <ul>
-            <li>
-              <p>图片资源规范：作品引用的图片资源，单个图片的大小不得超过500kb，如果超过500kb请压缩后上传，或者上传到大型在线图床后使用链接引用（推荐）；</p>
-            </li>
             <li>
               <p>资源路径规范：作品资源应该存放在对应的资源路径中，为此请按照以下目录结构规则存放对应资源文件：</p>
             </li>
@@ -90,7 +84,8 @@ D:/New Folder/work/css/style.css
           <ul>
             <li>
               <p>命名规范：作品网页文件命名应该为：
-                <code>index.html</code>，存放在作品根目录下，为网页首个展示的页面，其他页面也同样存放在根目录下，名称可任意填写，但确保index.html中跳转要存在该页面的相对路径。
+                <code>index.html</code>，存放在作品根目录下，为网页首个展示的页面，其他页面也同样存放在根目录下，名称可任意填写，但确保index.html中跳转要存在该页面的相对路径。其他任何资源，例如图片等资源
+                不可使用中文、拼音等命名。
               </p>
               <p>上传的作品中不论是文件名称还是网页中的
                 <code>class</code>、
@@ -100,210 +95,10 @@ D:/New Folder/work/css/style.css
                 <code>var</code>定义的变量名，都需要符合开发者规范，使用其定义含义的英文名称，不可使用拼音等来定义；
               </p>
             </li>
-            <li>
-              <p>作品规范：为了比赛的公平性，上传的作品中不可出现自己的学号、班级、姓名等内容。</p>
-            </li>
           </ul>
-          <h3 class="main-heading">作品基础规范</h3>
+          
 
-          <p>本规则将通过系统html代码质量检测，如果某些项的检测无法通过，将扣除一些分数，请知悉，请确保上传的作品符合以下基本规则：</p>
-
-          <ol>
-            <li>
-              所有HTML元素必须采用小写形式。
-              <div>
-                <pre v-highlight>
-        <code class="language-html">
-            &lt;!-- 正确示例 --&gt;
-            &lt;div&gt;This is a div.&lt;/div&gt;
-            &lt;!-- 错误示例 --&gt;
-            &lt;Div&gt;This is not allowed.&lt;/Div&gt;
-          </code>
-          </pre>
-              </div>
-            </li>
-
-            <li>
-              必须关闭所有HTML元素。
-              <div>
-                <pre v-highlight>
-        <code class="language-html">
-            &lt;!-- 正确示例 --&gt;
-            &lt;p&gt;This is a paragraph.&lt;/p&gt;
-            &lt;!-- 错误示例 --&gt;
-            &lt;p&gt;This is not allowed.
-          </code>
-        </pre>
-              </div>
-            </li>
-
-            <li>
-              必须关闭所有空的HTML元素。
-              <div>
-                <pre v-highlight>
-        <code class="language-html">
-            &lt;!-- 正确示例 --&gt;
-            &lt;img src="image.jpg" alt="An example image"&gt;
-            &lt;!-- 错误示例 --&gt;
-            &lt;img src="image.jpg" alt="An example image"&gt;
-          </code>
-        </pre>
-              </div>
-            </li>
-
-            <li>
-              属性名必须使用小写字母。
-              <div>
-                <pre v-highlight>
-        <code class="language-html">
-            &lt;!-- 正确示例 --&gt;
-            &lt;a href="https://www.example.com"&gt;Link&lt;/a&gt;
-            &lt;!-- 错误示例 --&gt;
-            &lt;a HREF="https://www.example.com"&gt;Link&lt;/a&gt;
-        </code>
-        </pre>
-              </div>
-            </li>
-
-            <li>
-              属性值必须使用引号括起来。
-              <div>
-                <pre v-highlight>
-        <code class="language-html">
-            &lt;!-- 正确示例 --&gt;
-            &lt;input type="text" name="username"&gt;
-            &lt;!-- 错误示例 --&gt;
-            &lt;input type=text name=username&gt;
-          </code>
-        </pre>
-              </div>
-            </li>
-
-            <li>
-              图片必须包含 <code>alt</code> 属性，以提供对图像内容的描述。
-              <div>
-                <pre v-highlight>
-        <code class="language-html">
-            &lt;!-- 正确示例 --&gt;
-            &lt;img src="image.jpg" alt="An example image"&gt;
-            &lt;!-- 错误示例 --&gt;
-            &lt;img src="image.jpg"&gt;
-          </code>
-        </pre>
-              </div>
-            </li>
-
-            <li>
-              在属性的等号前后不能添加空格。
-              <div>
-                <pre v-highlight>
-        <code class="language-html">
-            &lt;!-- 正确示例 --&gt;
-            &lt;a href="https://www.example.com"&gt;Link&lt;/a&gt;
-            &lt;!-- 错误示例 --&gt;
-            &lt;a href = "https://www.example.com"&gt;Link&lt;/a&gt;
-          </code>
-        </pre>
-              </div>
-            </li>
-
-            <li>
-              避免使一行代码长度超过80个字符。
-              <div>
-                <pre v-highlight>
-        <code class="language-html">
-            &lt;!-- 正确示例 --&gt;
-            &lt;p&gt;This is a long paragraph that should be wrapped.&lt;/p&gt;
-            &lt;!-- 错误示例 --&gt;
-            &lt;p&gt;This is a long paragraph that should not be wrapped and exceeds 80 characters.&lt;/p&gt;
-          </code>
-        </pre>
-              </div>
-            </li>
-
-            <li>
-              不得省略 <code>&lt;html&gt;</code> 和 <code>&lt;body&gt;</code> 标签。
-              <div>
-                <pre v-highlight>
-        <code class="language-html">
-            &lt;!-- 正确示例 --&gt;
-            &lt;html&gt;
-              &lt;body&gt;
-              
-              &lt;/body&gt;
-            &lt;/html&gt;
-            &lt;!-- 错误示例 --&gt;
-            &lt;!-- 这里省略了html和body标签 --&gt;
-          </code>
-        </pre>
-              </div>
-            </li>
-
-            <li>
-              必须包含 <code>&lt;title&gt;</code> 元素，用于指定文档的标题。
-              <div>
-                <pre v-highlight>
-        <code class="language-html">
-            &lt;!-- 正确示例 --&gt;
-            &lt;title&gt;Document Title&lt;/title&gt;
-            &lt;!-- 错误示例 --&gt;
-            &lt;head&gt;
-              &lt;!-- 这里省略了title标签 --&gt;
-            &lt;/head&gt;
-          </code>
-        </pre>
-              </div>
-            </li>
-
-            <li>
-              必须声明文档的编码格式。
-              <div>
-                <pre v-highlight>
-        <code class="language-html">
-            &lt;!-- 正确示例 --&gt;
-            &lt;meta charset="UTF-8"&gt;
-            &lt;!-- 错误示例 --&gt;
-            &lt;meta&gt;
-          </code>
-        </pre>
-              </div>
-            </li>
-
-            <li>
-              在JavaScript脚本中，禁止使用 <code>var</code> 来声明变量。
-              <div>
-                <pre v-highlight>
-        <code class="language-html">
-            &lt;script&gt;
-              // 正确示例
-              let name = "John";
-              const age = 30;
-            &lt;/script&gt;
-            &lt;script&gt;
-              // 错误示例
-              var name = "John";
-            &lt;/script&gt;
-          </code>
-        </pre>
-              </div>
-            </li>
-
-            <li>
-              引用图片及其他外部资源时，必须使用小写字母命名文件。
-              <div>
-                <pre v-highlight>
-          <code class="language-css">
-            // 正确示例
-            background-image: url('background.jpg');
-            // 错误示例
-            background-image: url('Background.JPG');
-          </code>
-        </pre>
-              </div>
-            </li>
-          </ol>
-
-          <p>请务必遵守以上规范，以确保作品的质量和一致性。</p>
+          <p>请务必遵守以上规范，以确保作品的质量。</p>
 
 
         </v-card-text>
@@ -328,18 +123,44 @@ D:/New Folder/work/css/style.css
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <v-dialog width="500" v-model="dialog3">
+      <v-card title="设置作品名称">
+        <v-card-text>
+          请为你上传的作品设置一个名称，例如：爱购物网
+        </v-card-text>
+        <v-text-field style="margin: 25px;" label="作品名称" variant="outlined" name="workName" v-model="workName"></v-text-field>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn
+            text="提交"
+            @click="submitWork()"
+          ></v-btn>
+        </v-card-actions>
+      </v-card>
+  </v-dialog>
   </v-row>
 </template>
 
 <script setup>
 import UploadFile from '../components/upload/UploadFile.vue'
 import { ref } from 'vue'
+import axios from 'axios'
+import Global from '@/AppGlobal.vue'
+import cookies from 'vue-cookies'
+import { useMsgStore } from '@/stores/MsgStore'
+
+const msg = useMsgStore()
 
 const dialog = ref(true)
 const dialog2 = ref(false)
+const dialog3 = ref(false)
 
-const uploadSuccess = (data) => {
-  console.log(data)
+const workName = ref()
+
+const uploadSuccess = () => {
+  dialog3.value = true
 }
 
 const timer = ref(null)
@@ -367,6 +188,20 @@ function reRead() {
   openPopup()
 }
 
+
+
+function submitWork() {
+  const formData = new FormData()
+  formData.append('name', workName.value)
+  axios.post(Global.WebAPI_URL + '/work/addWorkInfo?token=' + cookies.get('Token'), formData,).then(res => {
+    if (res.data.code === 200) {
+      msg.setMsg('提示', '作品名称已添加，请前往首页查看')
+      dialog3.value = false
+    } else {
+      msg.setMsg('错误', '发生错误，请重试')
+    }
+  })
+}
 
 </script>
 

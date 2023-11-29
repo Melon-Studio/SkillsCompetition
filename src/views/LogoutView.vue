@@ -16,7 +16,7 @@ export default {
             () => {
                 cookies.set('Token', null)
                 const userStore = useUserStore()
-                userStore.setLoginMode()
+                userStore.setClearMode()
                 router.push('/')
             }
         )

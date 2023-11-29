@@ -133,11 +133,16 @@ const submit = handleSubmit(values => {
         userStore.setLoginMode()
         loadding.value = false
         loginText.value = '登录成功'
-        setTimeout(() => {
-          router.push('/')
-        }, 2000)
+        if (res.data.data.needInitUser === true) {
+          setTimeout(() => {
+            router.push('/initUser')
+          }, 2000)
+        } else {
+          setTimeout(() => {
+            router.push('/')
+          }, 2000)
+        }
       } else if (res.data.code === 400) {
-        console.log(res.data)
         msgControl.setMsg('提示', '学号或密码错误，请重新输入')
         handleReset()
         captcha.value.reset(false)

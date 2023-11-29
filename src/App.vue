@@ -15,11 +15,12 @@
             <div class="v-toolbar-title pl-0 v-app-bar-title leftTitle">
               <div class="logoA">
                 <RouterLink to="/">
-                  <IconLogo class="logo" style="margin: 0; margin-right: 10px;" /> {{ AppTitle }}
+                  <IconLogo class="logo" style="margin: 0; margin-right: 10px;" /> <span>{{ AppTitle }}</span>
                 </RouterLink>
               </div>
-              <RouterLink class="jump" to="/"><span>首页</span></RouterLink>
-              <RouterLink class="jump" to="/about"><span>关于</span></RouterLink>
+              <v-btn class="mob_btn" icon="bi bi-list" @click="this.menu = true" style="margin-right: 10px;"></v-btn>
+              <RouterLink class="header_btn jump" to="/"><span>首页</span></RouterLink>
+              <RouterLink class="header_btn jump" to="/about"><span>关于</span></RouterLink>
             </div>
             <div class="flex-grow-1"></div>
             <div ref="right">
@@ -34,7 +35,7 @@
                     </div>
                     <div v-if="!user.getIsLogin">
                       <a class="right-item" @click="navigateTo('/login')">
-                        <i class="bi bi-door-open-fill"></i>
+                        <i class="bi bi-door-open-fill" style="margin-right: 0 !important;"></i>
                         <span>登录</span>
                       </a>
                     </div>
@@ -42,16 +43,21 @@
                     <div v-if="user.getIsLogin">
                       <a class="right-item" v-bind="props" style="cursor: default;" :title="user.getUsername">
                         <i class="bi bi-person-circle"></i>
-                        <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width: 60px;">{{ user.getUsername }}</span>
+                        <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width: 60px;">{{
+                          user.getUsername }}</span>
                       </a>
                     </div>
 
-                    <v-btn prepend-icon="bi bi-upload" variant="tonal" color="#00BD7E" @click="navigateTo('/upload')">上传作品</v-btn>
+                    <v-btn class="header_btn" prepend-icon="bi bi-upload" variant="tonal" color="#00BD7E"
+                      @click="navigateTo('/upload')">上传作品</v-btn>
+
+                    <v-btn class="mob_btn" icon="bi bi-upload" variant="tonal" color="#00BD7E"
+                        @click="navigateTo('/upload')"></v-btn>
                   </div>
 
                 </template>
 
-                <v-list class="v-theme--dark">
+                <v-list>
                   <v-list-item v-for="(item, index) in items" :key="index" :value="index" @click="navigateTo(item.url)">
                     <v-list-item-title>{{ item.title }}</v-list-item-title>
                   </v-list-item>
@@ -80,6 +86,23 @@
       <p>{{ msgControl.getMsg }}</p>
     </v-snackbar>
   </div>
+  <div>
+    <v-bottom-sheet v-model="menu">
+      <v-card class="menu_content" height="100%" transition="slide-x-transition">
+        <v-btn icon="bi bi-x-lg" @click="this.menu = false" style="margin-right: 10px;"></v-btn>
+        <v-list transition="slide-x-transition">
+          <v-list-item 
+            v-for="(menu, i) in menu_items"
+            :key="i"
+            :value="menu"
+            :title="menu.title"
+            @click="navigateTo(menu.to)"
+          >
+        </v-list-item>
+        </v-list>
+      </v-card>
+    </v-bottom-sheet>
+  </div>
 </template>
 
 <script>
@@ -95,9 +118,20 @@ export default {
       AppTitle: Global.WebAppTitle,
       AppDiscription: Global.WebAppDescription,
       dialogVisible: false,
+      menu: false,
       items: [
-        { title: '个人中心', url: '/space/my' },
+        { title: '个人中心', url: '/space/workManagement' },
         { title: '退出登录', url: '/logout' }
+      ],
+      menu_items: [
+        {
+          title: "首页",
+          to: "/"
+        },
+        {
+          title: "关于",
+          to: "/about"
+        }
       ]
     }
   },
@@ -107,6 +141,7 @@ export default {
     RouterView
   },
   created() {
+    // 设定Web程序简介
     document.querySelector('meta[name="description"]').setAttribute('content', this.AppDiscription)
 
     // TEST
@@ -119,6 +154,7 @@ export default {
         return true
       }
     },
+    // 设定 Cookie 永久有效
     setCookieTrue() {
       this.$cookies.set('isCookie', true, 60 * 60 * 24 * 9999)
       this.dialogVisible = false
@@ -151,12 +187,10 @@ Skills Competition V2.1 启动！
 请访问 https://github.com/Melon-Studio/ 带上你的想法并申请加入组织
     `);
 
-
+    // 使用 userStore 获取用户信息
     const user = useUserStore()
     const msgControl = useMsgStore()
-
     user.setLoginMode()
-
 
     return {
       user,
@@ -168,19 +202,18 @@ Skills Competition V2.1 启动！
 
 
 <style scoped>
-
 @keyframes jump-score {
-    0% {
-        transform: translateY(0);
-    }
+  0% {
+    transform: translateY(0);
+  }
 
-    50% {
-        transform: translateY(-3px);
-    }
+  50% {
+    transform: translateY(-3px);
+  }
 
-    100% {
-        transform: translateY(0);
-    }
+  100% {
+    transform: translateY(0);
+  }
 }
 
 .v-main {
@@ -260,6 +293,11 @@ nav a:first-of-type {
   font-size: 18px !important;
   margin-right: 20px !important;
   font-weight: 600;
+  line-height: 15px;
+}
+
+.logoA a span {
+  font-weight: 600;
 }
 
 .logoA a:hover {
@@ -308,7 +346,7 @@ a:hover {
   min-width: 50px;
   text-align: center;
   font-size: 13px;
-  width:65px;
+  width: 65px;
 }
 
 .right-item i {
@@ -326,4 +364,27 @@ a:hover {
   cursor: pointer;
 }
 
+.menu_content {
+  padding: 10px;
+}
+
+.mob_btn {
+    display: none;
+  }
+
+@media (max-width: 550px) {
+  .logoA a span {
+    display: none;
+  }
+  .logoA a {
+    margin-right: 0 !important;
+  }
+  .header_btn {
+    display: none;
+  }
+
+  .mob_btn {
+    display: block;
+  }
+}
 </style>

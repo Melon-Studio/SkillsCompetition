@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import VueCookies from "vue-cookies"
 import { createPinia } from 'pinia'
+import { zhHans } from 'vuetify/locale'
 
 
 import './assets/main.css'
@@ -31,6 +32,10 @@ const vuetify = createVuetify({
   icons: {
     defaultSet: 'mdi',
   },
+  locale: {
+    locale: 'zhHans',
+    messages: {zhHans}
+  }
 })
 
 // 代码高亮
