@@ -1,7 +1,7 @@
 <template>
   <iframe ref="webFrame" class="workContent"></iframe>
   <div class="button_group">
-    <v-btn icon="bi bi-vector-pen" @click="sheet = true"></v-btn>
+    <v-btn icon="bi bi-vector-pen" @click="sheet = true" v-show="isShow"></v-btn>
   </div>
   <v-bottom-sheet v-model="sheet" inset>
     <v-card>
@@ -138,6 +138,7 @@ const dialog2 = ref(false)
 const dialog3 = ref(false)
 const dialog4 = ref(false)
 const showDia = ref(false)
+const isShow = ref(false)
 
 const slider0 = ref(0)
 const slider1 = ref(0)
@@ -268,6 +269,13 @@ const submitScore = data => {
     msg.setMsg('错误', '未知错误，请联系管理员')
   })
 }
+
+axios.get(Global.WebAPI_URL + '/user/info?token=' + cookies.get('Token'))
+  .then(res => {
+    if (res.data.code === 200) {
+    if(res.data.data.usertype > 0) isShow.value = true
+  }
+})
 </script>
 
 <style>
