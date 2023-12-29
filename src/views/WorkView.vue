@@ -85,7 +85,7 @@
         评分一旦提交将无法修改!
       </v-card-text>
       <v-card-actions>
-        <v-checkbox label="不再提示" @click="showDialog()" v-model="showDia" class="dialog"></v-checkbox>
+        <v-checkbox label="不再提示" @click="showDialog()" v-model="showDia" class="dialogT"></v-checkbox>
           <v-spacer></v-spacer>
         <v-btn text="返回" @click="dialog2 = false"></v-btn>
         <v-btn text="确定" @click="submitScore(1)"></v-btn>
@@ -169,7 +169,7 @@ const folderStructure = ref('')
 
 const openCodeDialog = () => {
   if (code.value === '') {
-    axios.get(Global.WebAPI_URL + '/work/getWorkCode?token=' + cookies.get('Token') + '&sid=' + orderId).then(res => {
+    axios.get(Global.WebAPI_URL + '/work/getWorkCode?token=' + cookies.get('Token') + '&sid=' + orderId.value).then(res => {
       console.log(res);
       if (res.data.code === 200) {
         code.value = res.data.data.html
@@ -189,7 +189,7 @@ const openCodeDialog = () => {
 
 const openStructureDialog = () => {
   if (folderStructure.value === '') {
-    axios.get(Global.WebAPI_URL + '/work/getFolderHierarchy?token=' + cookies.get('Token') + '&sid=' + orderId).then(res => {
+    axios.get(Global.WebAPI_URL + '/work/getFolderHierarchy?token=' + cookies.get('Token') + '&sid=' + orderId.value).then(res => {
       console.log(res);
       if (res.data.code === 200) {
         folderStructure.value = res.data.data.structure
@@ -220,20 +220,24 @@ const formattedTotal = computed(() => {
   }
 });
 
-let orderId = route.params.orderId
+const orderId = ref(route.params.orderId);
 
 onMounted(() => {
-  const iframe = document.querySelector('.workContent')
-  axios.get(Global.WebAPI_URL + '/work/' + orderId)
+  const iframe = document.querySelector('.workContent');
+  axios.get(Global.WebAPI_URL + '/work/' + orderId.value)
     .then(res => {
       if (res.data.code === 200) {
-        iframe.src = res.data.data.path
+        iframe.src = res.data.data.path;
       } else if (res.data.code === 404) {
-        msg.setMsg('错误', '请求的页面不存在')
-        router.push({ path: '/404' })
+        msg.setMsg('错误', '请求的页面不存在');
+        router.push({ path: '/404' });
       }
     })
-})
+    .catch(err => {
+      console.error(err);
+      router.push({ path: '/404' });
+    });
+});
 
 const showDialog = () => {
   
@@ -253,7 +257,7 @@ const submitScore = data => {
     }
   }
 
-  axios.post(Global.WebAPI_URL + '/score/rate?token=' + cookies.get('Token') + '&score=' + formattedTotal.value + '&sid=' + orderId).then(res => {
+  axios.post(Global.WebAPI_URL + '/score/rate?token=' + cookies.get('Token') + '&score=' + formattedTotal.value + '&sid=' + orderId.value).then(res => {
     if (res.data.code === 200) {
       sheet.value = false
       dialog2.value = false
@@ -294,10 +298,6 @@ axios.get(Global.WebAPI_URL + '/user/info?token=' + cookies.get('Token'))
 
 .mar_p {
   margin-left: 8px;
-}
-
-.dialog .v-input__details {
-  display: none;
 }
 
 .code-editor {

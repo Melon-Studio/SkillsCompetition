@@ -85,7 +85,7 @@ const router = createRouter({
       name: '404',
       meta: {
         pageName: '404 页面丢失了',
-        isShow: true
+        isShow: false
       },
       component: () => import('../views/404View.vue')
     },
@@ -167,8 +167,11 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  document.title = to.meta.pageName + ' - ' + AppGlobal.WebAppTitle
-  next()
-})
+  if (to && to.path) {
+    document.title = to.meta.pageName + ' - ' + AppGlobal.WebAppTitle;
+  }
+
+  next();
+});
 
 export default router

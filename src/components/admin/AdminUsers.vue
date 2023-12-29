@@ -10,7 +10,7 @@
     </div>
   </div>
   <div class="tableBorder">
-    <v-table fixed-header height="calc(100vh - 200px)">
+    <v-table fixed-header height="auto">
       <thead>
         <tr>
           <th class="text-left">
@@ -313,10 +313,6 @@ const isInput = () => {
 <style>
 .tableBorder {
   padding: 10px;
-}
-
-.v-input__details {
-  display: none;
 }
 
 .operation {

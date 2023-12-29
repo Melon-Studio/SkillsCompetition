@@ -22,6 +22,7 @@ import * as directives from 'vuetify/directives'
 import MakeitCaptcha from 'makeit-captcha'
 import 'makeit-captcha/dist/captcha.min.css'
 
+
 // 创建 Vuetify 实例
 const vuetify = createVuetify({
   components,
@@ -38,6 +39,7 @@ const vuetify = createVuetify({
   }
 })
 
+
 // 代码高亮
 import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark.css'
@@ -45,6 +47,7 @@ import 'highlight.js/styles/atom-one-dark.css'
 hljs.configure({
   ignoreUnescapedHTML: true
 })
+
 
 const app = createApp(App)
 app.config.devtools = true

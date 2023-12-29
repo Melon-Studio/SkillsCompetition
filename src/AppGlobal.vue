@@ -4,6 +4,7 @@ const WebAppTitle = "Skills Competition"
 // Web程序简介
 const WebAppDescription = "Skills Competition"
 // Web程序后端API地址
+// const WebAPI_URL = "http://10.12.44.139:9999/api"
 const WebAPI_URL = "http://localhost:9999/api"
 // API请求超时时间
 const APITimeout = 10000

@@ -15,7 +15,7 @@ export default defineConfig({
   },
   server: {
     host: '0.0.0.0',
-    post: 5173
+    post: 5174
   },
   optimizeDeps: {
     // 禁用所有警告

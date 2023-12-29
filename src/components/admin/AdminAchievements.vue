@@ -78,10 +78,6 @@ getUserList()
     padding: 10px;
 }
 
-.v-input__details {
-    display: none;
-}
-
 .operation {
     display: flex;
     flex-direction: row;

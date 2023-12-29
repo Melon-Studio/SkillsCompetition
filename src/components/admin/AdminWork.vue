@@ -7,7 +7,7 @@
     </div>
   </div>
   <div class="tableBorder">
-    <v-table fixed-header height="calc(100vh - 200px)">
+    <v-table fixed-header height="auto">
       <thead>
         <tr>
           <th class="text-left">
@@ -43,7 +43,7 @@
           <td>{{ item.time }}</td>
           <td>
             <v-btn variant="text" color="red" icon="bi bi-trash3" style="font-size: 10px;" :width="32" :height="32"
-              @click="deleteWork(item.sid)"></v-btn>
+              @click="deleteWork(item.id)"></v-btn>
           </td>
         </tr>
       </tbody>
@@ -57,7 +57,7 @@
   <v-dialog v-model="isDelete" persistent width="500">
     <v-card title="敏感操作">
       <v-card-text>
-        该操作不可逆，你确定要删除此用户吗？
+        该操作不可逆，你确定要删除此用户的作品吗？
       </v-card-text>
 
       <v-card-actions>
@@ -113,7 +113,7 @@ const deleteWork = (sid) => {
   isDelete.value = sid
 }
 const deleteSid = () => {
-  axios.delete(Global.WebAPI_URL + '/user/delete?token=' + cookies.get('Token') + '&sid=' + isDelete.value)
+  axios.delete(Global.WebAPI_URL + '/work/deleteWork?token=' + cookies.get('Token') + '&sid=' + isDelete.value)
     .then(res => {
       if (res.data.code === 200) {
         const msg = useMsgStore()
@@ -149,10 +149,6 @@ const isInput = () => {
 <style>
 .tableBorder {
   padding: 10px;
-}
-
-.v-input__details {
-  display: none;
 }
 
 .operation {

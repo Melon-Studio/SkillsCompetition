@@ -150,6 +150,7 @@ import axios from 'axios'
 import Global from '@/AppGlobal.vue'
 import cookies from 'vue-cookies'
 import { useMsgStore } from '@/stores/MsgStore'
+import router from '../router'
 
 const msg = useMsgStore()
 
@@ -202,6 +203,13 @@ function submitWork() {
     }
   })
 }
+
+axios.get(Global.WebAPI_URL + '/user/info?token=' + cookies.get('Token')).then(res => {
+  if (res.data.data.password === '4e07f64a17adf113e575e59ba7fa6b2e') {
+    msg.setMsg('提示', '未设置密码，请设置密码后上传作品')
+    router.push('/initUser')
+  }
+})
 
 </script>
 

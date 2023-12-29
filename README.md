@@ -48,11 +48,24 @@ export default {
 npm run dev
 ```
 
-5. 打包项目
+## 项目部署
+
+1. 打包项目
 
 ```sh
 npm run build
 ```
 
-6. 构建到Nginx
+2. 将生成的dist文件夹部署到Nginx
 
+3. 设置项目Nginx配置为Vue的History路由模式
+
+   ```sh
+   location / {
+         try_files $uri $uri/ /index.html;
+       }
+   ```
+
+   
+
+4. 访问项目地址

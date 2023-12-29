@@ -6,7 +6,7 @@
       --v-layout-bottom: 0px;
     ">
     <div class="v-container v-locale--is-ltr v-theme--dark">
-      <div v-show="isShow">
+      <div>
         <p style="font-weight: 800; font-size: 28px;">
           {{ activity_title }}
         </p>
